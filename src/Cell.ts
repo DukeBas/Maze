@@ -2,9 +2,9 @@ import p5 from "p5";
 
 type Cell_connectivity = {
   top: boolean;
-  left: boolean;
-  bottom: boolean;
   right: boolean;
+  bottom: boolean;
+  left: boolean;
 };
 
 export class Cell {
@@ -16,9 +16,9 @@ export class Cell {
   // true indicated cell is connected to another cell on that side
   connected: Cell_connectivity = {
     top: false,
-    left: false,
-    bottom: false,
     right: false,
+    bottom: false,
+    left: false,
   };
 
   constructor(size: number, row: number, column: number) {
@@ -26,13 +26,7 @@ export class Cell {
     this.i = column;
     this.j = row;
     this.visited = false;
-
-    if (Math.random() > 0.9){
-      this.connected.top = true;
-      this.connected.bottom = true;
-      this.connected.left = true;
-      this.connected.right = true;
-    }
+    this.visited = false;
   }
 
   draw(sketch: p5) {
