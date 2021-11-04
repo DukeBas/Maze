@@ -3,11 +3,14 @@ import { Cell } from "../src/Cell";
 
 const sketch = (p: p5) => {
   const grid: Cell[][] = [];
-  const width = 16;
-  const height = 9;
-  const squareSize = Math.ceil(
-    Math.max(screen.width / width, screen.height / height)
-  );
+  const squareSize = 48;
+  const width = Math.ceil(screen.width/squareSize);
+  const height = Math.ceil(screen.height/squareSize);
+  // const width = 32;
+  // const height = 18;
+  // const squareSize = Math.ceil(
+  //   Math.max(screen.width / width, screen.height / height)
+  // );
   const stack: Cell[] = [];
 
   p.setup = () => {
@@ -16,7 +19,7 @@ const sketch = (p: p5) => {
 
     canvas.position(0, 0); // make canvas start in top-left corner
     canvas.style("z-index", "-1"); // set canvas as background
-    p.frameRate(2); // target framerate
+    p.frameRate(30); // target framerate
 
     // initalise grid
     for (let i = 0; i < width; i++) {
@@ -31,6 +34,12 @@ const sketch = (p: p5) => {
 
     //inital node
     stack.push(grid[0][0]);
+    grid[0][0].visited = true;
+
+    // drawing parameters
+    p.background(0, 0, 0);
+    p.stroke(255, 255, 255);
+    p.strokeWeight(squareSize / 3);
   };
 
   // redraw everything at the correct scale
@@ -41,25 +50,27 @@ const sketch = (p: p5) => {
   };
 
   p.draw = () => {
+    // console.log("before " , stack)
+ 
     if (stack.length > 0) {
       const current = stack.pop();
 
       const sides: boolean[] = [false, false, false, false]; // going from top clockwise, true indicates unvisited neighbour there
 
       // top
-      if (current.j - 1 >= 0 && grid[current.i][current.j - 1].visited) {
+      if (current.j - 1 >= 0 && !grid[current.i][current.j - 1].visited) {
         sides[0] = true;
       }
       // right
-      if (current.i + 1 < width && grid[current.i + 1][current.j].visited) {
+      if (current.i + 1 < width && !grid[current.i + 1][current.j].visited) {
         sides[1] = true;
       }
       // bottom
-      if (current.j + 1 < height && grid[current.i][current.j + 1].visited) {
+      if (current.j + 1 < height && !grid[current.i][current.j + 1].visited) {
         sides[2] = true;
       }
       // left
-      if (current.i - 1 >= 0 && grid[current.i - 1][current.j].visited) {
+      if (current.i - 1 >= 0 && !grid[current.i - 1][current.j].visited) {
         sides[3] = true;
       }
 
@@ -70,43 +81,52 @@ const sketch = (p: p5) => {
         const options: number[] = [];
         for (let i = 0; i < 4; i++) if (sides[i]) options.push(i);
         const chosen = options[Math.round(Math.random()*options.length)];
-        for (let i = 0; i < 4; i++) if (chosen != i) sides[i] == false;
+        for (let i = 0; i < 4; i++) if (chosen != i) sides[i] = false;
 
         if (sides[0]) {
           stack.push(grid[current.i][current.j - 1]);
           grid[current.i][current.j - 1].visited = true;
+          current.connected.top = true;
+          current.draw(p);
+          grid[current.i][current.j - 1].draw(p);
         }
         if (sides[1]) {
           stack.push(grid[current.i + 1][current.j]);
           grid[current.i + 1][current.j].visited = true;
+          current.connected.right = true;
+          current.draw(p);
+          grid[current.i + 1][current.j].draw(p);
         }
         if (sides[2]) {
           stack.push(grid[current.i][current.j + 1]);
           grid[current.i][current.j + 1].visited = true;
+          current.connected.bottom = true;
+          current.draw(p);
+          grid[current.i][current.j + 1].draw(p);
         }
         if (sides[3]) {
           stack.push(grid[current.i - 1][current.j]);
           grid[current.i - 1][current.j].visited = true;
+          current.connected.left = true;
+          current.draw(p);
+          grid[current.i - 1][current.j].draw(p);
         }
       }
     } else {
       // nothing left in stack, stop loop
+      console.log("Noting left!");
       p.noLoop();
     }
-    console.log(stack)
+    // console.log("after " , stack);
   };
 
   const drawState = () => {
-    p.push();
     p.background(0, 0, 0);
-    p.stroke(255, 255, 255);
-    p.strokeWeight(squareSize / 3);
     for (let i = 0; i < width; i++) {
       for (let j = 0; j < height; j++) {
         grid[i][j].draw(p);
       }
     }
-    p.pop();
   };
 
   // set functions as global functions

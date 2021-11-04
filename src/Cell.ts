@@ -26,15 +26,17 @@ export class Cell {
     this.i = column;
     this.j = row;
     this.visited = false;
-    this.visited = false;
   }
 
   draw(sketch: p5) {
-    sketch.push();
-    sketch.strokeWeight(2);
-    sketch.noFill();
-    sketch.rect(this.s * this.i, this.s * this.j, this.s * (this.i + 1), this.s * (this.j + 1));
-    sketch.pop();
+    // sketch.push();
+    // sketch.strokeWeight(2);
+    // sketch.noFill();
+    // // if (this.visited){
+    // //   sketch.fill(255,100,50);
+    // // }
+    // sketch.rect(this.s * this.i, this.s * this.j, this.s, this.s);
+    // sketch.pop();
 
     if (this.connected.top) {
       sketch.line((this.i + 0.5) * this.s, (this.j + 0.5) * this.s, (this.i + 0.5) * this.s, (this.j - 0.5) * this.s);
@@ -48,6 +50,5 @@ export class Cell {
     if (this.connected.right) {
       sketch.line((this.i + 0.5) * this.s, (this.j + 0.5) * this.s, (this.i + 1.5) * this.s, (this.j + 0.5) * this.s);
     }
-    
   }
 }
