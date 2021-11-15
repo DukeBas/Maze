@@ -39,16 +39,36 @@ export class Cell {
     // sketch.pop();
 
     if (this.connected.top) {
-      sketch.line((this.i + 0.5) * this.s, (this.j + 0.5) * this.s, (this.i + 0.5) * this.s, (this.j - 0.5) * this.s);
+      sketch.line(
+        (this.i + 0.5) * this.s,
+        (this.j + 0.5) * this.s,
+        (this.i + 0.5) * this.s,
+        (this.j - 0.5) * this.s
+      );
     }
     if (this.connected.left) {
-      sketch.line((this.i + 0.5) * this.s, (this.j + 0.5) * this.s, (this.i - 0.5) * this.s, (this.j + 0.5) * this.s);
+      sketch.line(
+        (this.i + 0.5) * this.s,
+        (this.j + 0.5) * this.s,
+        (this.i - 0.5) * this.s,
+        (this.j + 0.5) * this.s
+      );
     }
     if (this.connected.bottom) {
-      sketch.line((this.i + 0.5) * this.s, (this.j + 0.5) * this.s, (this.i + 0.5) * this.s, (this.j + 1.5) * this.s);
+      sketch.line(
+        (this.i + 0.5) * this.s,
+        (this.j + 0.5) * this.s,
+        (this.i + 0.5) * this.s,
+        (this.j + 1.5) * this.s
+      );
     }
     if (this.connected.right) {
-      sketch.line((this.i + 0.5) * this.s, (this.j + 0.5) * this.s, (this.i + 1.5) * this.s, (this.j + 0.5) * this.s);
+      sketch.line(
+        (this.i + 0.5) * this.s,
+        (this.j + 0.5) * this.s,
+        (this.i + 1.5) * this.s,
+        (this.j + 0.5) * this.s
+      );
     }
   }
 }

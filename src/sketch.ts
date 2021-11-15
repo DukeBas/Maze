@@ -1,11 +1,11 @@
 import p5 from "p5";
-import { Cell } from "../src/Cell";
+import { Cell } from "./Cell";
 
 const sketch = (p: p5) => {
   const grid: Cell[][] = [];
   const squareSize = 48;
-  const width = Math.ceil(screen.width/squareSize);
-  const height = Math.ceil(screen.height/squareSize);
+  const width = Math.ceil(screen.width / squareSize);
+  const height = Math.ceil(screen.height / squareSize);
   // const width = 32;
   // const height = 18;
   // const squareSize = Math.ceil(
@@ -51,7 +51,7 @@ const sketch = (p: p5) => {
 
   p.draw = () => {
     // console.log("before " , stack)
- 
+
     if (stack.length > 0) {
       const current = stack.pop();
 
@@ -80,7 +80,7 @@ const sketch = (p: p5) => {
 
         const options: number[] = [];
         for (let i = 0; i < 4; i++) if (sides[i]) options.push(i);
-        const chosen = options[Math.round(Math.random()*options.length)];
+        const chosen = options[Math.round(Math.random() * options.length)];
         for (let i = 0; i < 4; i++) if (chosen != i) sides[i] = false;
 
         if (sides[0]) {
