@@ -4,8 +4,8 @@ import { Cell } from "./Cell";
 const sketch = (p: p5) => {
   const grid: Cell[][] = [];
   const squareSize = 48;
-  const width = Math.ceil(screen.width / squareSize);
-  const height = Math.ceil(screen.height / squareSize);
+  let width: number;
+  let height: number;
   // const width = 32;
   // const height = 18;
   // const squareSize = Math.ceil(
@@ -17,9 +17,12 @@ const sketch = (p: p5) => {
     const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
     p.disableFriendlyErrors = true; // disable friendly errors for increased performance
 
+    width = Math.ceil(p.width / squareSize - 1);
+    height = Math.ceil(p.height / squareSize - 1);
+
     canvas.position(0, 0); // make canvas start in top-left corner
     canvas.style("z-index", "-1"); // set canvas as background
-    p.frameRate(30); // target framerate
+    p.frameRate(60); // target framerate
 
     // initalise grid
     for (let i = 0; i < width; i++) {
